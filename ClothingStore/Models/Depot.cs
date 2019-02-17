@@ -178,6 +178,7 @@ namespace ClothingStoreLib.Models
         };
 
         public static float SaleCount = 0;
+        public static float BuyCount = 0;
         public static float SaleAmount = 0;
         public static float Balance = 0;
     }

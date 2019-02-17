@@ -17,6 +17,7 @@ namespace ClothingStore.Services
             Depot.Products.FirstOrDefault(x => x.ProductId == productId)
                 .ProductStock += number;
             Depot.Balance -= productPrice * number;
+            Depot.BuyCount += number;
         }
 
         public void Sale(int productId, int number)
@@ -46,19 +47,7 @@ namespace ClothingStore.Services
                         .FirstOrDefault(x => x.ProductId == productId);
 
         }
-
-        public bool IsExistedProduct(Product product)
-        {
-            if (product.ProductId != 0)
-            {
-                return false;
-            }
-            var existed = Depot.Products
-                        .Any(x => x.ProductId == product.ProductId);
-
-            return existed;
-        }
-
+                
         public bool IsValidProducts(List<Product> products)
         {
             return true;
@@ -67,14 +56,6 @@ namespace ClothingStore.Services
         public bool IsValidProduct(Product product)
         {
             return true;
-        }
-
-        public int GetProductCount(Product product)
-        {
-            var count = Depot.Products
-                        .Count(x => x.ProductId == product.ProductId);
-
-            return count;
-        }
+        }               
     }
 }

@@ -32,11 +32,18 @@ namespace ClothingStoreWeb.Controllers
         public ActionResult Buy(int productId, int number)
         {
             var service = new StoreService();
-            var product = service.GetProduct(productId);
-            if (product != null)
+            try
             {
-                service.Buy(productId, number);
+                var product = service.GetProduct(productId);
+                if (product != null)
+                {
+                    service.Buy(productId, number);
+                }
             }
+            catch(Exception ex){
+                //return error or redirecto error page
+            }
+          
             return PartialView("~/Views/Partials/_ProductTable.cshtml");
         }
 
@@ -44,11 +51,18 @@ namespace ClothingStoreWeb.Controllers
         public ActionResult Sale(int productId, int number)
         {
             var service = new StoreService();
-            var product = service.GetProduct(productId);
-            if (product != null)
+            try
             {
-                service.Sale(productId, number);
+                var product = service.GetProduct(productId);
+                if (product != null)
+                {
+                    service.Sale(productId, number);
+                }
             }
+            catch (Exception ex) {
+                //return error or redirecto error page
+            }
+
             return PartialView("~/Views/Partials/_ProductTable.cshtml");
         }
     }

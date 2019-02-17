@@ -7,9 +7,7 @@
     var optionGroups = Depot.OptionGroups;
     var categories = Depot.Categories;
     var suppliers = Depot.Suppliers;
-    
 
-    var a = 1;
 }
 
 <h1>Products</h1>
@@ -22,9 +20,11 @@ else
 {
     <strong> Balance: @($"{Depot.Balance}$ ----------------------- ")</strong>
     <strong> Sale Amount: @($"{Depot.SaleAmount}$ ----------------------- ")</strong>
-    <strong> Sale Count: @($"{Depot.SaleCount} .")</strong> 
+    <strong> Buy Count: @($"{Depot.BuyCount} ----------------------- ")</strong>
+    <strong> Sale Count: @($"{Depot.SaleCount}")</strong>
     <br />
-    <table>
+    <br />
+    <table style="width: 100%;">
         <thead>
             <tr style="background-color:lightblue">
                 <th>Product Name</th>
@@ -39,23 +39,23 @@ else
         <tbody>
             @foreach (var product in products)
             {
-            <tr>
-                <td>@product.ProductName</td>
-                <td>
-                    @{
-            foreach (var option in product.ProductOptions)
-            {
-                <span> @(optionGroups.FirstOrDefault(x => x.OptionGroupId == option.OptionGroupID)?.OptionGroupName) </span>
-                <span> @(options.FirstOrDefault(x => x.OptionId == option.OptionId)?.OptionName) </span>
-}
-                    }
-                </td>
-                <td>@product.ProductPrice</td>
-                <td>@product.SalePrice</td>
-                <td>@(categories.FirstOrDefault(x => x.CategoryId == product.CategoryId)?.CategoryName)</td>
-                <td>@(suppliers.FirstOrDefault(x => x.SupplierId == product.SupplierId)?.SupplierName)</td>
-                <td>@product.ProductStock</td>
-            </tr>
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td>
+                        @{
+                            foreach (var option in product.ProductOptions)
+                            {
+                                <span> @(optionGroups.FirstOrDefault(x => x.OptionGroupId == option.OptionGroupID)?.OptionGroupName) </span>
+                                <span> @(options.FirstOrDefault(x => x.OptionId == option.OptionId)?.OptionName) </span>
+                            }
+                        }
+                    </td>
+                    <td>@product.ProductPrice</td>
+                    <td>@product.SalePrice</td>
+                    <td>@(categories.FirstOrDefault(x => x.CategoryId == product.CategoryId)?.CategoryName)</td>
+                    <td>@(suppliers.FirstOrDefault(x => x.SupplierId == product.SupplierId)?.SupplierName)</td>
+                    <td>@product.ProductStock</td>
+                </tr>
             }
         </tbody>
     </table>

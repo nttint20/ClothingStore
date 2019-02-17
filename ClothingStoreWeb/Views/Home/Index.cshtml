@@ -10,11 +10,11 @@
     var a = 1;
 }
 <style>
-    table {
+    /*table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
-    }
+    }*/
    
 </style>
 
@@ -64,7 +64,9 @@
                 success: function (data) {
                     $("#productContainer").empty();
                     $("#productContainer").append(data);
-
+                },
+                error: function (err) {
+                    //handle error :D
                 }
             });
         }
