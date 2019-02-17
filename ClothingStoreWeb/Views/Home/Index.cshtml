@@ -1,0 +1,75 @@
+﻿@using ClothingStore.Services;
+@using ClothingStoreLib.Models;
+@{
+    ViewBag.Title = "Home Page";
+    var products = Depot.Products;
+    var options = Depot.Options;
+    var optionGroups = Depot.OptionGroups;
+    var categories = Depot.Categories;
+
+    var a = 1;
+}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+   
+</style>
+
+<h1>Buy/Add Product</h1>
+@Html.Hidden("buyUrl", Url.Action("Buy", "Home"))
+@Html.Hidden("saleUrl",Url.Action("Sale","Home"))
+
+<strong>Products to buy/add</strong><br>
+<select id="productList" name="state">
+    <option value="1">@(products.FirstOrDefault(x => x.ProductId == 1)?.ProductName)</option>
+    <option value="2">@(products.FirstOrDefault(x => x.ProductId == 2)?.ProductName)</option>
+    <option value="3">@(products.FirstOrDefault(x => x.ProductId == 3)?.ProductName)</option>
+</select>
+<br>
+    Number:<br>
+<input type="number" name="number" value="1" id="buyNumber" min="1">
+<br><br>
+<button  class="btnAction" data-action="buy">Buy</button>
+<br><br>
+<button  class="btnAction" data-action="sale">Sale</button>
+
+<br />
+<div id="productContainer">
+    @Html.Partial("~/Views/Partials/_ProductTable.cshtml")
+</div>
+
+
+@section scripts {
+
+
+    <script>
+        $(".btnAction").on("click", function () {            
+            var url = $(this).data("action") === "buy" ? $("#buyUrl").val() : $("#saleUrl").val();
+            action(url);
+        });
+        function action(url) {         
+          
+            var productId = $("#productList").val();
+            var number = $("#buyNumber").val();
+            $.ajax({
+                url: url,
+                data: {
+                    productId: productId,
+                    number: number,
+                },
+                type: 'Post',
+                success: function (data) {
+                    $("#productContainer").empty();
+                    $("#productContainer").append(data);
+
+                }
+            });
+        }
+        
+    </script>
+
+}
+

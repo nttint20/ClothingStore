@@ -1,0 +1,63 @@
+﻿@using ClothingStore.Services;
+@using ClothingStoreLib.Models;
+@{
+    ViewBag.Title = "Home Page";
+    var products = Depot.Products;
+    var options = Depot.Options;
+    var optionGroups = Depot.OptionGroups;
+    var categories = Depot.Categories;
+    var suppliers = Depot.Suppliers;
+    
+
+    var a = 1;
+}
+
+<h1>Products</h1>
+<br />
+@if (!products.Any())
+{
+    <h1>No product</h1>
+}
+else
+{
+    <strong> Balance: @($"{Depot.Balance}$ ----------------------- ")</strong>
+    <strong> Sale Amount: @($"{Depot.SaleAmount}$ ----------------------- ")</strong>
+    <strong> Sale Count: @($"{Depot.SaleCount} .")</strong> 
+    <br />
+    <table>
+        <thead>
+            <tr style="background-color:lightblue">
+                <th>Product Name</th>
+                <th>Product Option</th>
+                <th>Product Price</th>
+                <th>Sale Price</th>
+                <th>Category</th>
+                <th>Branch</th>
+                <th>Product Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+            <tr>
+                <td>@product.ProductName</td>
+                <td>
+                    @{
+            foreach (var option in product.ProductOptions)
+            {
+                <span> @(optionGroups.FirstOrDefault(x => x.OptionGroupId == option.OptionGroupID)?.OptionGroupName) </span>
+                <span> @(options.FirstOrDefault(x => x.OptionId == option.OptionId)?.OptionName) </span>
+}
+                    }
+                </td>
+                <td>@product.ProductPrice</td>
+                <td>@product.SalePrice</td>
+                <td>@(categories.FirstOrDefault(x => x.CategoryId == product.CategoryId)?.CategoryName)</td>
+                <td>@(suppliers.FirstOrDefault(x => x.SupplierId == product.SupplierId)?.SupplierName)</td>
+                <td>@product.ProductStock</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
