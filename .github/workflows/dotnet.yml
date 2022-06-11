@@ -13,22 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - uses: EasyDesk/action-dotnet-build@v1
-        with:
-          # (Optional) Additional arguments for dotnet build.
-          build-args: -v normal
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+      
+   - name: Create Build Directory
+      run: mkdir _build
+      
+    - name: Restore Packages
+      run: nuget restore EzRep.sln
 
-          # (Optional) Build configuration, defaults to 'Release'
-          # If the version starts with the 'v' prefix, it will be removed to conform to the requirements of dotnet pack.
-          build-configuration: Release
-
-          # (Optional) The path of the project to build; if omitted, the whole solution is built
-          path: ./<project-name>/
-    - name: Test 1
-      run: dotnet test --no-build --verbosity normal
+    - name: Build Solution
+      run: |
+        msbuild.exe
